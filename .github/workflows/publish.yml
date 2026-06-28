@@ -1,0 +1,63 @@
+name: Publish
+
+# Phát hành khi push tag dạng v1.2.3 (tag phải trùng version trong package.json).
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write # để tạo GitHub Release + đính kèm .vsix
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      OVSX_PAT: ${{ secrets.OVSX_PAT }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify tag khớp version trong package.json
+        run: |
+          PKG_VERSION="v$(node -p "require('./package.json').version")"
+          TAG="${GITHUB_REF_NAME}"
+          echo "package.json = $PKG_VERSION | tag = $TAG"
+          if [ "$PKG_VERSION" != "$TAG" ]; then
+            echo "::error::Tag ($TAG) không khớp version trong package.json ($PKG_VERSION)."
+            exit 1
+          fi
+
+      - name: Compile (tsc)
+        run: npm run compile
+
+      - name: Test (vitest)
+        run: npm test
+
+      - name: Package VSIX
+        run: npm run package
+
+      - name: Publish to Visual Studio Marketplace
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: npx @vscode/vsce publish --packagePath *.vsix
+
+      - name: Publish to Open VSX (tuỳ chọn)
+        if: ${{ env.OVSX_PAT != '' }}
+        run: npx ovsx publish *.vsix -p "$OVSX_PAT"
+
+      - name: Create GitHub Release + đính kèm .vsix
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "${GITHUB_REF_NAME}" \
+            --notes "Xem CHANGELOG.md để biết chi tiết." \
+            *.vsix

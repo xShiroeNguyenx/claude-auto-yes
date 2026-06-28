@@ -1,0 +1,94 @@
+{
+  "name": "claude-auto-yes",
+  "displayName": "Claude Auto-Yes",
+  "description": "Auto-Yes cho Claude Code + hiện Live Usage (5h/7d/context%) trên status bar. Cục bộ, không cần backend.",
+  "version": "0.0.1",
+  "publisher": "nguyenkhanh",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "claude",
+    "claude code",
+    "auto-yes",
+    "usage",
+    "status bar",
+    "anthropic"
+  ],
+  "galleryBanner": {
+    "color": "#C15C3C",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nguyenkhanh/claude-auto-yes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nguyenkhanh/claude-auto-yes/issues"
+  },
+  "homepage": "https://github.com/nguyenkhanh/claude-auto-yes#readme",
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "claudeAutoYes.toggleAutoYes",
+        "title": "Claude Auto-Yes: Toggle Auto-Yes"
+      },
+      {
+        "command": "claudeAutoYes.uninstallAutoYesHook",
+        "title": "Claude Auto-Yes: Uninstall Auto-Yes Hook"
+      },
+      {
+        "command": "claudeAutoYes.showAutoYesLog",
+        "title": "Claude Auto-Yes: Show Auto-Yes Log"
+      },
+      {
+        "command": "claudeAutoYes.toggleLiveUsage",
+        "title": "Claude Auto-Yes: Toggle Live Usage (status line)"
+      },
+      {
+        "command": "claudeAutoYes.enableLiveUsage",
+        "title": "Claude Auto-Yes: Enable Live Usage (status line)"
+      },
+      {
+        "command": "claudeAutoYes.disableLiveUsage",
+        "title": "Claude Auto-Yes: Disable Live Usage"
+      }
+    ],
+    "configuration": {
+      "title": "Claude Auto-Yes",
+      "properties": {
+        "claudeAutoYes.autoYes.hours": {
+          "type": "number",
+          "default": 24,
+          "description": "Auto-Yes tự tắt sau bao nhiêu giờ khi bật (mặc định 24)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "icon": "node scripts/make-icon.cjs",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^2.0.0"
+  }
+}

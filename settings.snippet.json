@@ -1,0 +1,27 @@
+{
+  "_comment": "CACH KHUYEN NGHI: chay 'node scripts/install.cjs' de tu merge (tu dien dung duong dan). File nay chi de tham khao khi muon merge TAY: doi <ABS_PATH_REPO> thanh duong dan tuyet doi toi repo tren MAY CUA BAN, dung dau \\\\ tren Windows.",
+  "permissions": {
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)",
+      "Bash(git reset --hard *)",
+      "PowerShell(Remove-Item * -Recurse -Force *)",
+      "Edit(.git/**)",
+      "Edit(.claude/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"<ABS_PATH_REPO>\\hooks\\auto-yes.cjs\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

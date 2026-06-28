@@ -1,0 +1,19 @@
+.vscode/**
+.vscode-test/**
+src/**
+.gitignore
+.github/**
+tsconfig.json
+vitest.config.ts
+PLAN.md
+PUBLISHING.md
+**/*.map
+**/*.ts
+**/*.tsbuildinfo
+*.vsix
+# media/** được GIỮ LẠI: chứa auto-yes-hook.cjs + statusline-bridge.cjs mà
+# extension copy ra globalStorage lúc chạy. Không loại trừ media.
+# Thư mục hooks/ và scripts/ là CLI legacy (dùng tay) — loại khỏi VSIX cho gọn.
+hooks/**
+scripts/**
+settings.snippet.json
