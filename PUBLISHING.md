@@ -6,6 +6,68 @@ Tài liệu này mô tả toàn bộ quy trình đưa extension lên **Visual St
 
 ---
 
+## 🔁 Phát hành lại dưới publisher mới `shiroenguyen` (làm NGAY)
+
+**Hiện trạng:**
+
+- Code mới nhất (icon + đã đổi publisher sang `shiroenguyen`) **đã ở `origin/main`**.
+- Tag `v0.0.1` đang trỏ commit **cũ** (publisher `nguyenkhanh`) — lần chạy trước đã
+  publish nhầm `nguyenkhanh.claude-auto-yes` lên Marketplace.
+- **Chưa có gì** publish dưới `shiroenguyen`.
+
+> ⚠️ **Điều kiện tiên quyết:** `VSCE_PAT` phải thuộc tài khoản Azure DevOps **sở hữu
+> publisher `shiroenguyen`** (PAT theo *tài khoản Azure*, không theo publisher — nếu
+> cùng một tài khoản Azure sở hữu cả `nguyenkhanh` lẫn `shiroenguyen` thì PAT cũ vẫn
+> dùng được). Publisher `shiroenguyen` phải đã tồn tại tại
+> <https://marketplace.visualstudio.com/manage>.
+
+### Cách A — thủ công, nhanh nhất (khuyến nghị cho lần này)
+
+Vì `0.0.1` dưới publisher mới còn trống, publish thẳng không cần đụng tag:
+
+```bash
+cd "d:/NGUYENKHANH/GLOBAL_WORKSPACE/claude-auto-yes"
+npm ci
+npm test
+npm run package                 # xác minh ra claude-auto-yes-0.0.1.vsix
+npx vsce login shiroenguyen     # dán VSCE_PAT khi được hỏi
+npm run publish                 # publish shiroenguyen.claude-auto-yes@0.0.1
+# (tuỳ chọn) Open VSX — nhớ đã ký Publisher Agreement (mục 0.3):
+npx ovsx create-namespace shiroenguyen -p <OVSX_PAT>
+npx ovsx publish claude-auto-yes-0.0.1.vsix -p <OVSX_PAT>
+```
+
+### Cách B — qua CI, giữ lại `0.0.1` (trỏ lại tag về HEAD)
+
+```bash
+git push origin :refs/tags/v0.0.1   # xoá tag trên remote
+git tag -d v0.0.1                    # xoá tag local
+git tag v0.0.1                       # tạo lại tại HEAD (publisher shiroenguyen)
+git push origin v0.0.1              # trigger publish.yml
+```
+
+### Cách C — qua CI, lên version mới `0.0.2` (sạch nhất cho lần sau)
+
+Sửa `version` → `0.0.2` trong `package.json`, thêm mục `0.0.2` vào `CHANGELOG.md`, rồi:
+
+```bash
+git add package.json CHANGELOG.md
+git commit -m "release: v0.0.2"
+git push
+git tag v0.0.2
+git push origin v0.0.2
+```
+
+### Dọn listing cũ (tuỳ chọn)
+
+Nếu muốn gỡ bản đã publish nhầm dưới publisher cũ:
+
+```bash
+npx vsce unpublish nguyenkhanh.claude-auto-yes   # cần PAT của publisher nguyenkhanh
+```
+
+---
+
 ## 0. Chuẩn bị một lần (chỉ làm lần đầu)
 
 ### 0.1. Tài khoản & Publisher trên VS Marketplace
