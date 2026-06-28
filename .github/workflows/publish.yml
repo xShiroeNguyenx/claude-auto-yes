@@ -51,13 +51,23 @@ jobs:
 
       - name: Publish to Open VSX (tuỳ chọn)
         if: ${{ env.OVSX_PAT != '' }}
-        run: npx ovsx publish *.vsix -p "$OVSX_PAT"
+        continue-on-error: true # optional — không chặn việc tạo GitHub Release
+        run: |
+          PUBLISHER=$(node -p "require('./package.json').publisher")
+          # Tạo namespace lần đầu (bỏ qua nếu đã tồn tại) rồi mới publish.
+          npx ovsx create-namespace "$PUBLISHER" -p "$OVSX_PAT" || true
+          npx ovsx publish *.vsix -p "$OVSX_PAT"
 
       - name: Create GitHub Release + đính kèm .vsix
+        if: always() # vẫn tạo release kể cả khi bước publish optional gặp lỗi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" \
-            --title "${GITHUB_REF_NAME}" \
-            --notes "Xem CHANGELOG.md để biết chi tiết." \
-            *.vsix
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" *.vsix --clobber
+          else
+            gh release create "${GITHUB_REF_NAME}" \
+              --title "${GITHUB_REF_NAME}" \
+              --notes "Xem CHANGELOG.md để biết chi tiết." \
+              *.vsix
+          fi

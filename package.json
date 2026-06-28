@@ -3,7 +3,7 @@
   "displayName": "Claude Auto-Yes",
   "description": "Auto-Yes cho Claude Code + hiện Live Usage (5h/7d/context%) trên status bar. Cục bộ, không cần backend.",
   "version": "0.0.1",
-  "publisher": "nguyenkhanh",
+  "publisher": "shiroenguyen",
   "license": "MIT",
   "icon": "media/icon.png",
   "engines": {
@@ -26,12 +26,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nguyenkhanh/claude-auto-yes.git"
+    "url": "https://github.com/xShiroeNguyenx/claude-auto-yes.git"
   },
   "bugs": {
-    "url": "https://github.com/nguyenkhanh/claude-auto-yes/issues"
+    "url": "https://github.com/xShiroeNguyenx/claude-auto-yes/issues"
   },
-  "homepage": "https://github.com/nguyenkhanh/claude-auto-yes#readme",
+  "homepage": "https://github.com/xShiroeNguyenx/claude-auto-yes#readme",
   "main": "./out/extension.js",
   "activationEvents": [
     "onStartupFinished"

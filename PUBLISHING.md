@@ -13,7 +13,7 @@ Tài liệu này mô tả toàn bộ quy trình đưa extension lên **Visual St
 1. Đăng nhập [Azure DevOps](https://dev.azure.com) bằng tài khoản Microsoft.
 2. Vào <https://marketplace.visualstudio.com/manage> → **Create publisher**.
    - **ID** publisher phải **trùng** với trường `publisher` trong `package.json`
-     (hiện đang là `nguyenkhanh`). Nếu đặt ID khác, sửa lại `package.json`.
+     (hiện đang là `shiroenguyen`). Nếu đặt ID khác, sửa lại `package.json`.
 
 ### 0.2. Tạo Personal Access Token (PAT)
 
@@ -29,9 +29,13 @@ Tài liệu này mô tả toàn bộ quy trình đưa extension lên **Visual St
 ### 0.3. (Tuỳ chọn) Open VSX cho VSCodium / Cursor / Windsurf
 
 1. Đăng nhập <https://open-vsx.org> bằng GitHub.
-2. Vào **Settings → Access Tokens** → tạo token = `OVSX_PAT`.
-3. Ký **Publisher Agreement** (Settings → Namespaces), và tạo namespace trùng
-   tên publisher: `npx ovsx create-namespace nguyenkhanh -p <OVSX_PAT>`.
+2. **Ký Eclipse Publisher Agreement** — vào **Settings → bấm "sign the Publisher
+   Agreement"**. **Bắt buộc**, nếu chưa ký thì publish sẽ bị từ chối.
+3. Vào **Settings → Access Tokens** → tạo token = `OVSX_PAT`.
+4. (Không bắt buộc làm tay) Tạo namespace trùng tên publisher:
+   `npx ovsx create-namespace shiroenguyen -p <OVSX_PAT>`.
+   > CI/CD đã **tự chạy `create-namespace`** trước khi publish nên thường không cần
+   > làm thủ công — chỉ cần đã ký agreement ở bước 2.
 
 ---
 
@@ -44,7 +48,7 @@ npm run icon             # (chỉ khi sửa icon) sinh lại media/icon.png
 npm run package          # tạo claude-auto-yes-<version>.vsix để kiểm tra
 
 # Đăng nhập 1 lần rồi publish:
-npx vsce login nguyenkhanh      # dán VSCE_PAT khi được hỏi
+npx vsce login shiroenguyen      # dán VSCE_PAT khi được hỏi
 npm run publish                 # = vsce publish
 ```
 
@@ -107,7 +111,7 @@ Tag `v*` sẽ chạy `publish.yml` → tự build, test, publish và tạo Relea
       `media/icon.png`, `out/`, `media/*.cjs`; **không** lẫn `src/`, `*.map`.
 - [ ] `publisher` trong `package.json` khớp publisher đã tạo trên Marketplace.
 - [ ] `repository` URL đã trỏ đúng repo thật (hiện là placeholder
-      `github.com/nguyenkhanh/claude-auto-yes`).
+      `github.com/xShiroeNguyenx/claude-auto-yes`).
 
 ---
 
@@ -120,3 +124,5 @@ Tag `v*` sẽ chạy `publish.yml` → tự build, test, publish và tạo Relea
 | `ERROR The repository field is missing` | Đã thêm `repository` vào `package.json` (đã xử lý). |
 | Icon không hiện trên Marketplace | `icon` phải là **PNG ≥ 128×128** (không nhận SVG). Chạy `npm run icon`. |
 | Version đã tồn tại | Marketplace không cho ghi đè — phải tăng version. |
+| Open VSX: `Unknown publisher: <name>` | Namespace chưa tồn tại trên open-vsx.org. CI đã tự chạy `ovsx create-namespace`; nếu vẫn lỗi, chạy tay `npx ovsx create-namespace <publisher> -p <OVSX_PAT>`. |
+| Open VSX: `publisher has not signed the agreement` | Chưa ký Eclipse Publisher Agreement — vào <https://open-vsx.org> → Settings để ký (bước 0.3). |

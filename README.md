@@ -4,9 +4,9 @@
 
 # Claude Auto-Yes (VSCode Extension)
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/nguyenkhanh.claude-auto-yes?label=Marketplace)](https://marketplace.visualstudio.com/items?itemName=nguyenkhanh.claude-auto-yes)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/nguyenkhanh.claude-auto-yes)](https://marketplace.visualstudio.com/items?itemName=nguyenkhanh.claude-auto-yes)
-[![CI](https://github.com/nguyenkhanh/claude-auto-yes/actions/workflows/ci.yml/badge.svg)](https://github.com/nguyenkhanh/claude-auto-yes/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/shiroenguyen.claude-auto-yes?label=Marketplace)](https://marketplace.visualstudio.com/items?itemName=shiroenguyen.claude-auto-yes)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/shiroenguyen.claude-auto-yes)](https://marketplace.visualstudio.com/items?itemName=shiroenguyen.claude-auto-yes)
+[![CI](https://github.com/xShiroeNguyenx/claude-auto-yes/actions/workflows/ci.yml/badge.svg)](https://github.com/xShiroeNguyenx/claude-auto-yes/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Extension VSCode gộp **2 tính năng cho Claude Code**, điều khiển bằng nút trên status bar — không cần backend:
@@ -31,7 +31,7 @@ Lệnh tương ứng trong Command Palette (`Ctrl+Shift+P`): `Claude Auto-Yes: T
 **Cách 1 — từ Marketplace** (sau khi đã publish):
 
 ```bash
-code --install-extension nguyenkhanh.claude-auto-yes
+code --install-extension shiroenguyen.claude-auto-yes
 ```
 
 Hoặc mở **Extensions** trong VSCode và tìm "Claude Auto-Yes".

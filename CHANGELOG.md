@@ -20,5 +20,5 @@ và dự án tuân theo [Semantic Versioning](https://semver.org/).
   thắng kể cả khi hook tắt/lỗi). Luôn backup `settings.json` trước khi sửa.
 - Icon Marketplace + bộ test (vitest) cho hook và bridge.
 
-[Unreleased]: https://github.com/nguyenkhanh/claude-auto-yes/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/nguyenkhanh/claude-auto-yes/releases/tag/v0.0.1
+[Unreleased]: https://github.com/xShiroeNguyenx/claude-auto-yes/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/xShiroeNguyenx/claude-auto-yes/releases/tag/v0.0.1
